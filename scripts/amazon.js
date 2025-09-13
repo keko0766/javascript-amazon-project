@@ -34,7 +34,7 @@ products.forEach((product) => { // Adds a product block from json
             </div>
 
             <div class="product-quantity-container">
-              <select>
+              <select class="js-quatity-selector-${product.id}">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -78,12 +78,14 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
         }
       })
 
+      let quantity = Number(document.querySelector(`.js-quatity-selector-${productId}`).value)
+
       if(matchingItem){
-        matchingItem.quantity++
+        matchingItem.quantity += quantity
       } else{
         cart.push({
           productId: productId,
-          quantity: 1
+          quantity: quantity
         })
       }
       quantityUpdate()
