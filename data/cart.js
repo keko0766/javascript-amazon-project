@@ -19,13 +19,16 @@ function saveToStorage(){
 
 const quantityElem = document.querySelector('.cart-quantity');
 export function quantityUpdate(){ //Update item quantity
-  let quantity = 0
-  cart.forEach((item) => {
-    quantity += item.quantity
-  })
-  quantityElem.innerHTML = quantity
+  quantityElem.innerHTML = quantityNum();
 }
 
+export function quantityNum(){
+  let quantity = 0;
+  cart.forEach((item) => {
+    quantity += item.quantity;
+  })
+  return quantity;
+}
 
 export function addToCart(productId, quantity){ //Adds item to cart
   let matchingItem;

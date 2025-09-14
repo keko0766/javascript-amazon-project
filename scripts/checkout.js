@@ -1,4 +1,4 @@
-import {cart, quantityUpdate, removeFromCart} from "../data/cart.js";
+import {cart, quantityNum, removeFromCart} from "../data/cart.js";
 import {products} from "../data/products.js"
 import {formatCurrency} from "./utils/money.js";
 
@@ -96,6 +96,7 @@ function orderSummaryRender(){
     cardSummaryHTML += list;
   })
 
+  updateCheckout()
   document.querySelector('.order-summary').innerHTML = cardSummaryHTML
 }
 
@@ -109,7 +110,11 @@ document.querySelectorAll('.delete-quantity-link')
         .querySelector(`.js-cart-item-container-${deleteId}`)
 
       container.remove()
-      console.log(deleteId);
+      updateCheckout()
     })
   })
 
+function updateCheckout(){
+  document.querySelector('.return-to-home-link')
+    .innerHTML = quantityNum()
+}
