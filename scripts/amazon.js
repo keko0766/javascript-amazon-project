@@ -1,5 +1,8 @@
-let productsHTML = ``
-const quantityElem = document.querySelector('.cart-quantity')
+import {cart} from '../data/cart.js';
+
+let productsHTML = ``;
+const quantityElem = document.querySelector('.cart-quantity');
+
 
 function quantityUpdate(){ //Update item quantity
   let quantity = 0
@@ -65,10 +68,12 @@ products.forEach((product) => { // Adds a product block from json
 document.querySelector('.products-grid')
   .innerHTML = productsHTML
 
+let isClick;
+
 document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
-  .forEach((button) => {
+  .forEach((button, index) => {
     button.addEventListener('click', () => {
-      const productId = button.dataset.productId
+      const {productId} = button.dataset
 
       let matchingItem;
 
@@ -78,14 +83,18 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
         }
       })
 
+      isClick = true
+
+      addToCart(index, isClick)
+
       let quantity = Number(document.querySelector(`.js-quatity-selector-${productId}`).value)
 
       if(matchingItem){
         matchingItem.quantity += quantity
       } else{
         cart.push({
-          productId: productId,
-          quantity: quantity
+          productId,
+          quantity
         })
       }
       quantityUpdate()
@@ -94,11 +103,14 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
 
 
 
-function showCart(){
-  setTimeout(() => {
-    document.querySelector('.added-to-cart')
-      .forEach((item) => {
 
-      })
-  },)
+function addToCart(index, isClick){
+  const showAdd = document.querySelectorAll('.added-to-cart')
+  showAdd[index].classList.add('is-show');
+  if (isClick){
+    setTimeout(() => {
+    showAdd[index].className = 'added-to-cart';
+    }, 1500);
+    isClick = false;
+  } 
 }
