@@ -63,10 +63,11 @@ products.forEach((product) => { // Adds a product block from json
 document.querySelector('.products-grid')
 .innerHTML = productsHTML
 
+
+
+quantityUpdate()
+
 let isClick;
-
-
-
 document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
 .forEach((button, index) => {
   button.addEventListener('click', () => {

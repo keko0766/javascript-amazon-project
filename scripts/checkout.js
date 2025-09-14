@@ -1,4 +1,4 @@
-import {cart, removeFromCart} from "../data/cart.js";
+import {cart, quantityUpdate, removeFromCart} from "../data/cart.js";
 import {products} from "../data/products.js"
 import {formatCurrency} from "./utils/money.js";
 
@@ -30,7 +30,7 @@ function orderSummaryRender(){
                     ${matchItem.name}
                   </div>
                   <div class="product-price">
-                    $${formatCurrency(matchItem.priceCents)}
+                    $${formatCurrency(matchItem.priceCents)*cartItem.quantity}
                   </div>
                   <div class="product-quantity">
                     <span>

@@ -1,4 +1,4 @@
-export let cart = [
+export let cart = JSON.parse(localStorage.getItem('cart')) || [
   {
     productId: '58b4fc92-e98c-42aa-8c55-b6b79996769a',
     quantity: 3
@@ -12,6 +12,11 @@ export let cart = [
     quantity: 1
   }
 ]
+
+function saveToStorage(){
+  localStorage.setItem('cart', JSON.stringify(cart))
+}
+
 const quantityElem = document.querySelector('.cart-quantity');
 export function quantityUpdate(){ //Update item quantity
   let quantity = 0
@@ -39,6 +44,8 @@ export function addToCart(productId, quantity){ //Adds item to cart
       quantity
     })
   }
+  saveToStorage()
+  quantityUpdate()
 }
 
 // export function removeFromCart(deleteId){
@@ -54,4 +61,5 @@ export function addToCart(productId, quantity){ //Adds item to cart
 
 export function removeFromCart(deleteId) {
   cart = cart.filter(item => item.productId !== deleteId);
+  saveToStorage()
 }
