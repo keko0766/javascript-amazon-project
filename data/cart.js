@@ -19,7 +19,13 @@ function saveToStorage(){
 
 const quantityElem = document.querySelector('.cart-quantity');
 export function quantityUpdate(){ //Update item quantity
-  quantityElem.innerHTML = quantityNum();
+  let num = quantityNum();
+  if (num === 0){
+    quantityElem.innerHTML = ''
+  } else {
+
+    quantityElem.innerHTML = num;
+  }
 }
 
 export function quantityNum(){
