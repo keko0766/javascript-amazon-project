@@ -1,5 +1,6 @@
 import {cart, quantityUpdate, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
 let productsHTML = ``;
 // const quantityElem = document.querySelector('.cart-quantity');
@@ -27,7 +28,7 @@ products.forEach((product) => { // Adds a product block from json
   </div>
   
   <div class="product-price">
-  $${product.priceCents / 10}
+  $${formatCurrency(product.priceCents)}
   </div>
   
   <div class="product-quantity-container">
