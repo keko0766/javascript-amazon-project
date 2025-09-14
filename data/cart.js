@@ -1,4 +1,13 @@
-export let cart = []
+export let cart = [
+  {
+    productId: '58b4fc92-e98c-42aa-8c55-b6b79996769a',
+    quantity: 3
+  }, 
+  {
+    productId: '3fdfe8d6-9a15-4979-b459-585b0d0545b9',
+    quantity: 5
+  }
+]
 const quantityElem = document.querySelector('.cart-quantity');
 export function quantityUpdate(){ //Update item quantity
   let quantity = 0
