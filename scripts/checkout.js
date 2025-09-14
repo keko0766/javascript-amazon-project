@@ -16,7 +16,7 @@ function orderSummaryRender(){
       }
     })
     let list = `
-            <div class="cart-item-container">
+            <div class="cart-item-container js-cart-item-container-${matchItem.id}">
               <div class="delivery-date">
                 Delivery date: Tuesday, June 21
               </div>
@@ -102,10 +102,14 @@ function orderSummaryRender(){
 document.querySelectorAll('.delete-quantity-link')
   .forEach((link) => {
     link.addEventListener('click', () => {
-      const deleteId = link.dataset.deleteId
-      removeFromCart(deleteId)
-      orderSummaryRender()
-      console.log(deleteId)
+      const deleteId = link.dataset.deleteId;
+      removeFromCart(deleteId);
+      
+      const container = document
+        .querySelector(`.js-cart-item-container-${deleteId}`)
+
+      container.remove()
+      console.log(deleteId);
     })
   })
 

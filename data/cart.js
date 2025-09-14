@@ -49,6 +49,7 @@ export function addToCart(productId, quantity){ //Adds item to cart
 //     }
 //   })
 //   cart = newArray
+
 // }
 
 export function removeFromCart(deleteId) {
