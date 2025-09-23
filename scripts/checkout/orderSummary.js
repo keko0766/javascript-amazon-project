@@ -52,7 +52,7 @@ export function checkoutRender(){
                     ${matchItem.name}
                   </div>
                   <div class="product-price js-product-price-${matchItem.id}">
-                    $${formatCurrency(matchItem.priceCents)*cartItem.quantity}
+                    $${formatCurrency(matchItem.priceCents * cartItem.quantity)}
                   </div>
                   <div class="product-quantity">
                     <span>
