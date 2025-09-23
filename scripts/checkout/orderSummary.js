@@ -95,15 +95,10 @@ export function checkoutRender(){
   document.querySelectorAll('.delete-quantity-link')
     .forEach((link) => {
       link.addEventListener('click', () => {
-        const deleteId = link.dataset.deleteId;
+        const {deleteId} = link.dataset;
         removeFromCart(deleteId);
-        
-        const container = document
-          .querySelector(`.js-cart-item-container-${deleteId}`)
-
-        container.remove()
-        updateCheckout()
-        renderPaymentSummary()
+        checkoutRender();
+        renderPaymentSummary();
       })
     })
 
