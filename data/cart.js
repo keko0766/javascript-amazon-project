@@ -56,7 +56,7 @@ export function addToCart(productId, quantity){ //Adds item to cart
     cart.push({
       productId,
       quantity,
-      deliveryId: 1
+      deliveryId: '1'
     })
   }
   saveToStorage()

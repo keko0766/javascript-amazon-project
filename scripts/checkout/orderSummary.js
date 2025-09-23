@@ -103,10 +103,11 @@ export function checkoutRender(){
 
         container.remove()
         updateCheckout()
+        renderPaymentSummary()
       })
     })
 
-  function updateCheckout(){
+  function updateCheckout(){ // update checout count
     document.querySelector('.return-to-home-link')
       .innerHTML = quantityNum()
   }
@@ -174,7 +175,8 @@ export function checkoutRender(){
       const isChecked = item.id === cartItemId;
       const priceString = item.priceCents === 0 
       ? 'FREE'
-      : `$${formatCurrency(item.priceCents)} - `
+      : `$${formatCurrency(item.priceCents)} - `;
+      console.log(item.id, cartItemId)
       html += `
                   <div class="delivery-option js-delivery-option"
                     data-product-id="${id}"
