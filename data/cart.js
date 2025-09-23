@@ -1,15 +1,18 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [
   {
     productId: '58b4fc92-e98c-42aa-8c55-b6b79996769a',
-    quantity: 3
+    quantity: 3, 
+    deliveryId: '1'
   }, 
   {
     productId: '3fdfe8d6-9a15-4979-b459-585b0d0545b9',
-    quantity: 5
+    quantity: 5, 
+    deliveryId: '1'
   },
   {
     productId: '83d4ca15-0f35-48f5-b7a3-1ea210004f2e',
-    quantity: 1
+    quantity: 1, 
+    deliveryId: '1'
   }
 ]
 
@@ -50,25 +53,29 @@ export function addToCart(productId, quantity){ //Adds item to cart
   } else{
     cart.push({
       productId,
-      quantity
+      quantity,
+      deliveryId: 1
     })
   }
   saveToStorage()
   quantityUpdate()
 }
 
-// export function removeFromCart(deleteId){
-//   const newArray = [];
-//   cart.forEach((item, i) => {
-//     if(deleteId !== item.productId){
-//       newArray.push(item)
-//     }
-//   })
-//   cart = newArray
 
-// }
 
 export function removeFromCart(deleteId) {
   cart = cart.filter(item => item.productId !== deleteId);
+  saveToStorage() 
+}
+
+export function saveQuantityToCart(id, val){
+  
+  cart.forEach((item) => {
+    if(item.productId === id){
+      if(val>0){
+        item.quantity=val
+      }
+    }
+  })
   saveToStorage()
 }
