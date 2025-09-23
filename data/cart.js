@@ -1,3 +1,5 @@
+import { getProductById } from "./products.js";
+
 export let cart = JSON.parse(localStorage.getItem('cart')) || [
   {
     productId: '58b4fc92-e98c-42aa-8c55-b6b79996769a',

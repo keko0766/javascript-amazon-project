@@ -1,7 +1,8 @@
 import {cart, quantityNum, removeFromCart, saveQuantityToCart, updateDeliveryOptions} from  "../../data/cart.js";
-import {products} from "../../data/products.js"
+import {products, getProductById} from "../../data/products.js"
 import {formatCurrency} from "../utils/money.js";
-import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
+import {renderPaymentSummary} from "./paymentSummary.js"
 
 const now = dayjs()
 
@@ -16,7 +17,7 @@ export function checkoutRender(){
     cart.forEach((cartItem, index) => { //render
       const productId = cartItem.productId;
       
-      const matchItem = products.find(product => product.id === productId);
+      const matchItem = getProductById(productId);
       
       if (!matchItem) {
         console.warn("Product not found for id:", productId);
@@ -24,12 +25,7 @@ export function checkoutRender(){
       }
       
       const deliveryOptionId = cartItem.deliveryId;
-      let deliveryOption;
-      deliveryOptions.forEach((option) => {
-        if (option.id === deliveryOptionId){
-          deliveryOption = option
-        }
-      })
+      const deliveryOption = getDeliveryOption(deliveryOptionId);
       const deliveryDate = now.add(
         deliveryOption.deliveryDays,
         `days`
@@ -147,14 +143,14 @@ export function checkoutRender(){
     const container = document.querySelector(`.js-cart-item-container-${productId}`)
 
     if (inputVal > 0){
-      container.classList.remove('is-editing-quantity')
+      container.classList.remove('is-editing-quantity');
       
-      saveQuantityToCart(productId, inputVal)
-      updateCountAndPrice(productId, inputVal)
-      updateCheckout()
+      saveQuantityToCart(productId, inputVal);
+      updateCountAndPrice(productId, inputVal);
+      updateCheckout();
+      renderPaymentSummary();
     }
   }
-
 
   function updateCountAndPrice(id, quantity){
     const quantityElem = document.querySelector(`.js-quantity-label-${id}`)
@@ -211,4 +207,6 @@ export function checkoutRender(){
         checkoutRender()
       })
     })
+
+  renderPaymentSummary()
 }
