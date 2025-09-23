@@ -8,27 +8,39 @@ const now = dayjs()
 // console.log(now.format('YYYY-MM-DD HH:mm:ss'));
 
 
-
 orderSummaryRender()
 
 function orderSummaryRender(){
   let cardSummaryHTML = '';
-
+  
   cart.forEach((cartItem, index) => { //render
-    // if (cartItem && cartItem.productId) {
     const productId = cartItem.productId;
-
+    
     const matchItem = products.find(product => product.id === productId);
-
+    
     if (!matchItem) {
       console.warn("Product not found for id:", productId);
       return; // пропустить, если товара нет
     }
     
+    const deliveryOptionId = cartItem.deliveryId;
+    let deliveryOption;
+    deliveryOptions.forEach((option) => {
+      if (option.id === deliveryOptionId){
+        deliveryOption = option
+      }
+    })
+    const deliveryDate = now.add(
+      deliveryOption.deliveryDays,
+      `days`
+    )
+    const dateString = deliveryDate.format('dddd, MMMM D')
+    
+
     let list = `
           <div class="cart-item-container js-cart-item-container-${matchItem.id}">
             <div class="delivery-date">
-              Delivery date: Tuesday, June 21
+              Delivery date: ${dateString}
             </div>
 
             <div class="cart-item-details-grid">
@@ -79,6 +91,8 @@ function orderSummaryRender(){
 
           `
     cardSummaryHTML += list;
+
+    console.log(now.add(cartItem.deliveryId, `days`))
   })
     updateCheckout()
     document.querySelector('.order-summary').innerHTML = cardSummaryHTML
