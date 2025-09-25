@@ -1,14 +1,14 @@
 import {cart, quantityNum, removeFromCart, saveQuantityToCart, updateDeliveryOptions} from  "../../data/cart.js";
 import {products, getProductById} from "../../data/products.js"
 import {formatCurrency} from "../utils/money.js";
-import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
+import { deliveryOptions, getDeliveryOption, deliveryDateFormatting } from "../../data/deliveryOptions.js";
 import {renderPaymentSummary} from "./paymentSummary.js"
+import {renderCheckoutHeader} from "./checkoutHeader.js"
 
 const now = dayjs()
 
 // console.log(now.format('YYYY-MM-DD HH:mm:ss'));
 export function checkoutRender(){
-
   orderSummaryRender()
 
   function orderSummaryRender(){
@@ -26,11 +26,7 @@ export function checkoutRender(){
       
       const deliveryOptionId = cartItem.deliveryId;
       const deliveryOption = getDeliveryOption(deliveryOptionId);
-      const deliveryDate = now.add(
-        deliveryOption.deliveryDays,
-        `days`
-      )
-      const dateString = deliveryDate.format('dddd, MMMM D')
+      const dateString = deliveryDateFormatting(deliveryOption)
       
 
       let list = `
@@ -88,24 +84,21 @@ export function checkoutRender(){
             `
       cardSummaryHTML += list;
     })
-      updateCheckout()
+      renderCheckoutHeader()
       document.querySelector('.order-summary').innerHTML = cardSummaryHTML
   }
+
 
   document.querySelectorAll('.delete-quantity-link')
     .forEach((link) => {
       link.addEventListener('click', () => {
         const {deleteId} = link.dataset;
         removeFromCart(deleteId);
-        checkoutRender();
+        renderCheckoutHeader()
         renderPaymentSummary();
+        checkoutRender();
       })
     })
-
-  function updateCheckout(){ // update checout count
-    document.querySelector('.return-to-home-link')
-      .innerHTML = quantityNum()
-  }
 
   document.querySelectorAll('.update-quantity-link')
     .forEach((link) => {
@@ -130,6 +123,7 @@ export function checkoutRender(){
           saveQuantity(save)
         }
       })
+      renderCheckoutHeader();
     })
   // data-js-update-link="${matchItem.id}
 
@@ -143,7 +137,7 @@ export function checkoutRender(){
       
       saveQuantityToCart(productId, inputVal);
       updateCountAndPrice(productId, inputVal);
-      updateCheckout();
+      renderCheckoutHeader();
       renderPaymentSummary();
     }
   }
@@ -162,16 +156,11 @@ export function checkoutRender(){
   function renderDeliveryDate(id, cartItemId){
     let html = ''
     deliveryOptions.forEach((item) => {
-      const deliveryDate = now.add(
-        item.deliveryDays,
-        `days`
-      )
-      const dateString = deliveryDate.format('dddd, MMMM D')
       const isChecked = item.id === cartItemId;
-      const priceString = item.priceCents === 0 
+      const dateString = deliveryDateFormatting(item)
+      const priceString = item.priceCents === 0
       ? 'FREE'
       : `$${formatCurrency(item.priceCents)} - `;
-      console.log(item.id, cartItemId)
       html += `
                   <div class="delivery-option js-delivery-option"
                     data-product-id="${id}"
@@ -199,7 +188,6 @@ export function checkoutRender(){
     .forEach((element) => {
       element.addEventListener('click', () => {
         const {productId, deliveryId} = element.dataset;
-        console.log(deliveryId)
         updateDeliveryOptions(productId, deliveryId);
         checkoutRender()
       })
