@@ -145,7 +145,6 @@ export function checkoutRender(){
   function updateCountAndPrice(id, quantity){
     const quantityElem = document.querySelector(`.js-quantity-label-${id}`)
     const priceElem = document.querySelector(`.js-product-price-${id}`)
-
     const matchingItem = products.find((product) => product.id === id)
 
     quantityElem.innerHTML = quantity;
