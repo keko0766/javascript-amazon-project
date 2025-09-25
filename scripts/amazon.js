@@ -1,6 +1,7 @@
-import {cart, quantityUpdate, addToCart} from '../data/cart.js';
+// import {cart, quantityUpdate, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import {cart} from '../data/cart-class.js'
 
 let productsHTML = ``;
 // const quantityElem = document.querySelector('.cart-quantity');
@@ -21,14 +22,14 @@ products.forEach((product) => { // Adds a product block from json
   
   <div class="product-rating-container">
   <img class="product-rating-stars"
-  src="images/ratings/rating-${product.rating.stars * 10}.png">
+  src=${product.ratingStars()}>
   <div class="product-rating-count link-primary">
-  ${product.rating.count}
+  ${product.ratingCount()}
   </div>
   </div>
   
   <div class="product-price">
-  $${formatCurrency(product.priceCents)}
+    ${product.price()}
   </div>
   
   <div class="product-quantity-container">
@@ -73,7 +74,7 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
   button.addEventListener('click', () => {
     const {productId} = button.dataset
     let quantity = Number(document.querySelector(`.js-quatity-selector-${productId}`).value)
-    addToCart(productId, quantity)
+    cart.addToCart(productId, quantity)
     
     isClick = true
 
@@ -84,7 +85,7 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
 
 function quantityRender(){
   const quantityElem = document.querySelector('.cart-quantity');
-  quantityElem.innerHTML = quantityUpdate();
+  quantityElem.innerHTML = cart.quantityUpdate();
 }
 
 

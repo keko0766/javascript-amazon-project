@@ -1,5 +1,5 @@
 class Cart {
-  cartItemsf;
+  cartItems;
   localStorageKeyf;
   
   constructor(localStorageKey){
@@ -81,11 +81,4 @@ class Cart {
   };
 }
 
-const cart = new Cart('cart-class');
-const businessCart = new Cart('business-cart-class');
-
-cart.addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 2)
-
-
-console.log(businessCart.cartItems)
-console.log(cart.cartItems)
+export const cart = new Cart('cart')
