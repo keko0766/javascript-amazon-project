@@ -65,7 +65,7 @@ document.querySelector('.products-grid')
 
 
 
-quantityUpdate()
+quantityRender()
 
 let isClick;
 document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
@@ -78,9 +78,14 @@ document.querySelectorAll('[data-product-id]') //Adds a product to cart onclick
     isClick = true
 
     showAdd(index, isClick)
-    quantityUpdate()
+    quantityRender()
   })
 })
+
+function quantityRender(){
+  const quantityElem = document.querySelector('.cart-quantity');
+  quantityElem.innerHTML = quantityUpdate();
+}
 
 
 
