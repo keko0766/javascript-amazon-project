@@ -1,20 +1,18 @@
-import {cart, quantityNum, removeFromCart, saveQuantityToCart, updateDeliveryOptions} from  "../../data/cart.js";
-import {products, getProductById} from "../../data/products.js"
+import {cart} from  "../../data/cart-class.js";
+import {loadProducts, getProductById} from "../../data/products.js"
 import {formatCurrency} from "../utils/money.js";
 import { deliveryOptions, getDeliveryOption, deliveryDateFormatting } from "../../data/deliveryOptions.js";
 import {renderPaymentSummary} from "./paymentSummary.js"
 import {renderCheckoutHeader} from "./checkoutHeader.js"
 
 const now = dayjs()
-
-// console.log(now.format('YYYY-MM-DD HH:mm:ss'));
-export function checkoutRender(){
+export function checkoutRender(product){
+  const products = product;
   orderSummaryRender()
-
   function orderSummaryRender(){
     let cardSummaryHTML = '';
     
-    cart.forEach((cartItem, index) => { //render
+    cart.cartItems.forEach((cartItem) => { //render
       const productId = cartItem.productId;
       
       const matchItem = getProductById(productId);
@@ -93,7 +91,7 @@ export function checkoutRender(){
     .forEach((link) => {
       link.addEventListener('click', () => {
         const {deleteId} = link.dataset;
-        removeFromCart(deleteId);
+        cart.removeFromCart(deleteId);
         renderCheckoutHeader()
         renderPaymentSummary();
         checkoutRender();
@@ -111,7 +109,6 @@ export function checkoutRender(){
         container.classList.add('is-editing-quantity');
       })
     })
-
 
   document.querySelectorAll('.save-quantity-link')
     .forEach((save) => {
@@ -135,7 +132,7 @@ export function checkoutRender(){
     if (inputVal > 0){
       container.classList.remove('is-editing-quantity');
       
-      saveQuantityToCart(productId, inputVal);
+      cart.saveQuantityToCart(productId, inputVal);
       updateCountAndPrice(productId, inputVal);
       renderCheckoutHeader();
       renderPaymentSummary();
@@ -145,11 +142,10 @@ export function checkoutRender(){
   function updateCountAndPrice(id, quantity){
     const quantityElem = document.querySelector(`.js-quantity-label-${id}`)
     const priceElem = document.querySelector(`.js-product-price-${id}`)
-    const matchingItem = products.find((product) => product.id === id)
+    const matchingItem = getProductById(id)
 
     quantityElem.innerHTML = quantity;
     priceElem.innerHTML = `$${formatCurrency(matchingItem.priceCents * quantity)}`
-
   }
 
   function renderDeliveryDate(id, cartItemId){
@@ -187,7 +183,7 @@ export function checkoutRender(){
     .forEach((element) => {
       element.addEventListener('click', () => {
         const {productId, deliveryId} = element.dataset;
-        updateDeliveryOptions(productId, deliveryId);
+        cart.updateDeliveryOptions(productId, deliveryId);
         checkoutRender()
       })
     })

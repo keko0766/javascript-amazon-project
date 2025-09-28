@@ -54,7 +54,7 @@ class Cart {
 
   removeFromCart(deleteId) {
     this.cartItems = this.cartItems.filter(item => item.productId !== deleteId);
-    saveToStorage() 
+    this.saveToStorage() 
   };
 
   saveQuantityToCart(id, val){
@@ -65,7 +65,7 @@ class Cart {
         }
       }
     })
-    saveToStorage()
+    this.saveToStorage()
   };
   updateDeliveryOptions(productId, deliveryId){
     let matchingItem;
@@ -77,7 +77,7 @@ class Cart {
     })
 
     matchingItem.deliveryId = deliveryId;
-    saveToStorage();
+    this.saveToStorage();
   };
 }
 
