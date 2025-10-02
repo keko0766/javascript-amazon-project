@@ -4,11 +4,11 @@ import '../data/backend-practice.js';
 import { loadProducts } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 
-loadProducts(() => {
-  cart.loadCart()
-  checkoutRender()
-  renderPaymentSummary()
-})
+// loadProducts(() => {
+//   cart.loadCart()
+//   checkoutRender()
+//   renderPaymentSummary()
+// })
 
 /*
 
@@ -33,10 +33,23 @@ new Promise((resolve) => {
 //   renderPaymentSummary();
 // })
 
-Promise.all([
-  new Promise((resolve) => loadProducts(() => resolve()) ),
-  new Promise((resolve) => cart.loadCart(() => resolve()) )
-]).then(() => {
+// Promise.all([
+//   loadProducts(),
+//   new Promise((resolve) => cart.loadCart(() => resolve()) )
+// ]).then(() => {
+//   checkoutRender();
+//   renderPaymentSummary();
+// })
+
+async function loadPage() {
+  console.log('load page');
+  await loadProducts();
+  new Promise((resolve) => {
+    cart.loadCart(() => {
+      resolve()
+    })
+  })
   checkoutRender();
   renderPaymentSummary();
-})
+}
+loadPage()

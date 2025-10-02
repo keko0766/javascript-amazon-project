@@ -80,13 +80,11 @@ class Cart {
     this.saveToStorage();
   };
   loadCart(){
-    const xhr = new XMLHttpRequest();
-
-    xhr.addEventListener('load', () => {
-      console.log(xhr.response)
+    fetch('https://supersimplebackend.dev/products').then((response) => {
+      return response.json()
+    }).then((classData) => {
+      console.log(classData)
     })
-    xhr.open('GET', 'https://supersimplebackend.dev/products');
-    xhr.send()
   }
 }
 

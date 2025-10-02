@@ -3,9 +3,11 @@ import { loadProducts} from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import {cart} from '../data/cart-class.js'
 
-loadProducts(renderProductsGrid)
-
-
+render()
+async function render(){
+  const products = await loadProducts();
+  renderProductsGrid(products);
+}
 function renderProductsGrid(products){
   let productsHTML = ``;
   products.forEach((product) => { // Adds a product block from json
@@ -64,7 +66,7 @@ function renderProductsGrid(products){
     `
   })
   document.querySelector('.products-grid')
-  .innerHTML = productsHTML
+  .innerHTML = productsHTML;
 
   quantityRender()
 

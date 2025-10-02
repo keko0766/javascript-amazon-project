@@ -5,9 +5,8 @@ import { deliveryOptions, getDeliveryOption, deliveryDateFormatting } from "../.
 import {renderPaymentSummary} from "./paymentSummary.js"
 import {renderCheckoutHeader} from "./checkoutHeader.js"
 
-const now = dayjs()
-export function checkoutRender(product){
-  const products = product;
+
+export function checkoutRender(){
   orderSummaryRender()
   function orderSummaryRender(){
     let cardSummaryHTML = '';

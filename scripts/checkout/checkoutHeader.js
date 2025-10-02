@@ -1,4 +1,4 @@
-import { quantityNum } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 
 export function renderCheckoutHeader(){
   const headerHTML = `
@@ -12,7 +12,7 @@ export function renderCheckoutHeader(){
 
         <div class="checkout-header-middle-section">
           Checkout (<a class="return-to-home-link"
-            href="amazon.html">${quantityNum()} items</a>)
+            href="amazon.html">${cart.quantityNum()} items</a>)
         </div>
 
         <div class="checkout-header-right-section">
